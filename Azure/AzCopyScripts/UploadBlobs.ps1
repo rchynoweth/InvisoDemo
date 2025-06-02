@@ -48,7 +48,7 @@ foreach ($file in $files) {
     $prefixedName = "$timestamp_$fileName"
 
     # Upload to flat destination with timestamp prefix
-    $destinationUrl = "$destinationBase/$filenameNoExt/$year/$month/$day/$prefixedName"
+    $destinationUrl = "$destinationBase/$filenameNoExt/year=$year/month=$month/day=$day/$prefixedName"
 
     Write-Host "Uploading $($file.FullName) → $destinationUrl"
     azcopy copy $file.FullName $destinationUrl --overwrite=true
