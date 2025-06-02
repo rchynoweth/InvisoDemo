@@ -1,7 +1,7 @@
 
 
-Run the following command. 
-'''
+Run the following command.  
+```
 .\UploadBlobs.ps1 `
   -TenantId "<your-tenant-id>" `
   -ClientId "<your-app-id>" `
@@ -9,7 +9,7 @@ Run the following command.
   -StorageAccountName "ryanstorageadls" `
   -ContainerName "demo" `
   -TargetDirectory "point_of_sale"
-'''
+```
 
 
 
