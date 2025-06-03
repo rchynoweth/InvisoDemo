@@ -10,7 +10,17 @@ Run the following command.
   -ContainerName "demo" `
   -TargetDirectory "point_of_sale"
 ```
+OneLake Command.
+```
 
+.\UploadBlobsOneLake.ps1 `
+  -TenantId "<your-tenant-id>" `
+  -ClientId "<your-app-id>" `
+  -ClientSecret "<your-app-secret>" `
+  -WorkspaceId "<your-workspace-id>" `
+  -LakehouseId "<your-lakehouse-id>" `
+  -TargetDirectory "point_of_sale"
+```
 
 
 The directory structure would be as follows: 
