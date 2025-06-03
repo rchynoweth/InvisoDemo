@@ -14,6 +14,9 @@ $now = Get-Date
 $year = $now.Year
 $month = "{0:D2}" -f $now.Month  # zero-padded
 $day = "{0:D2}" -f $now.Day      # zero-padded
+$hour = "{0:D2}" -f $now.hour      # zero-padded
+$minute = "{0:D2}" -f $now.minute      # zero-padded
+$second = "{0:D2}" -f $now.second      # zero-padded
 
 
 # set environment variable for AzCopy
@@ -48,7 +51,6 @@ foreach ($file in $files) {
     $prefixedName = "$timestamp_$fileName"
 
     # Upload to flat destination with timestamp prefix
-    $destinationUrl = "$destinationBase/$filenameNoExt/year=$year/month=$month/day=$day/$prefixedName"
 
     Write-Host "Uploading $($file.FullName) → $destinationUrl"
     azcopy copy $file.FullName $destinationUrl --overwrite=true
