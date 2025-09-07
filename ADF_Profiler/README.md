@@ -8,7 +8,17 @@ APIs
 
 
 
-TO DO: 
-- Linked Services 
-- Triggers 
-- Integration Runtimes
+SQL Querys:
+- I need access to a subset of the system tables so that I can pull stored procedure information. 
+    - Counts
+    - Querys for line and table count complexity analysis - could be a use case to leverage an llm
+- Must be able to list and view definitions of all views in the data warehouse 
+- Must be able to list and view definitions of all functions
+- https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-procedures-transact-sql
+- https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-objects-transact-sql
+- https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-views-transact-sql
+
+
+
+Power BI - Connects to Oracle using a lot of Dataflows. 
+Oracle has RLS. 

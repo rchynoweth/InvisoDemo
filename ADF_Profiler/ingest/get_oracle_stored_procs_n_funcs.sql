@@ -1,0 +1,10 @@
+SELECT 
+    OWNER,
+    NAME AS ObjectName,
+    TYPE AS ObjectType,
+    LISTAGG(TEXT, '') WITHIN GROUP (ORDER BY LINE) AS SourceCode
+FROM ALL_SOURCE
+WHERE TYPE IN ('PROCEDURE', 'FUNCTION')
+and OWNER IN ('<schema names>')
+GROUP BY OWNER, NAME, TYPE
+ORDER BY OWNER, ObjectName;

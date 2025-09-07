@@ -1,0 +1,9 @@
+SELECT
+    OWNER,
+    VIEW_NAME,
+    TEXT AS ViewDefinition
+FROM ALL_VIEWS
+WHERE OWNER IN ('<schema names>')
+ORDER BY OWNER, VIEW_NAME;
+
+
