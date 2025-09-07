@@ -16,7 +16,11 @@ ORDER BY OWNER, TABLE_NAME, COLUMN_ID;
 
 
 -- this is the create table statements 
-SELECT DBMS_METADATA.GET_DDL('TABLE', t.table_name, t.owner) AS TableDDL
+SELECT 
+t.owner,
+t.table_name,
+t.num_rows AS RowCount
+
 FROM ALL_TABLES t
 WHERE OWNER NOT IN ('SYS', 'SYSTEM')  -- filter out system schemas
 ORDER BY OWNER, TABLE_NAME;
