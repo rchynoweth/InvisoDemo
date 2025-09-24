@@ -22,3 +22,8 @@ SQL Querys:
 
 Power BI - Connects to Oracle using a lot of Dataflows. 
 Oracle has RLS. 
+
+
+Things to look into more: 
+- Which stored procedures are used in the synapse pipelines?
+    - seems like majority are for logging and some are parameterized as well for insert into the table. 
