@@ -6,7 +6,7 @@ import jwt  # pyjwt
 
 # Configure these for your Epic sandbox backend service
 EPIC_TOKEN_URL = "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token"
-EPIC_SCOPE = "system/Encounters.read"  # adjust scopes as needed
+EPIC_SCOPE = "system/Encounter.read"
 
 
 def get_epic_access_token():
@@ -14,7 +14,7 @@ def get_epic_access_token():
     # client_id = dbutils.secrets.get("epic-scope", "epic-client-id")
     # private_key = dbutils.secrets.get("epic-scope", "epic-private-key")  # PEM string
 
-    client_id = ''
+    client_id = '0f7b7896-a85b-470d-991c-62056a788727'
     with open("Databricks/epic/epic_private_key.pem", "r") as f:
         private_key = f.read()
 

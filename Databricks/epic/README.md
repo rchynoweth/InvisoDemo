@@ -3,17 +3,20 @@
 
 1. Run this command locally. 
 ```
-# 1. Generate a 4096-bit RSA private key
-openssl genrsa -out epic_private_key.pem 4096
+# 1) Generate private key (keep this SECRET)
+openssl genrsa -out epic_private_key.pem 2048
 
-# 2. Extract the public key
-openssl rsa -in epic_private_key.pem -pubout -out epic_public_key.pem
+# 2) Generate a self-signed certificate containing the public key
+openssl req -new -x509 -key epic_private_key.pem -out epic_public_cert.cer -days 3650 -subj "/CN=epic-backend-client" -config NUL
 ```
+
+
 
 
 1. Create_JWKS_Key.py
     - pip install jwcrypto
     - pip install requests
+    - pip install PyJWT
 
 
 1. Create a `jwks.json` file with the contents from above. 

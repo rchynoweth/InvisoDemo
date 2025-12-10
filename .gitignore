@@ -8,6 +8,7 @@ data
 *.so
 *.env
 *.pem
+*.cer
 
 # Distribution / packaging
 .Python
