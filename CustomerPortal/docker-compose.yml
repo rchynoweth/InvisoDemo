@@ -1,0 +1,12 @@
+services:
+  portal:
+    build: .
+    ports:
+      - "8050:8050"
+    env_file:
+      - .env
+    volumes:
+      - forecast-data:/app/instance
+
+volumes:
+  forecast-data:

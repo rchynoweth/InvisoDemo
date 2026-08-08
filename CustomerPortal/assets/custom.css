@@ -1,0 +1,91 @@
+:root {
+    --inviso-navy: #0a1a33;
+    --inviso-blue: #0066cc;
+    --inviso-bg: #f4f6fa;
+}
+
+body {
+    background-color: var(--inviso-bg);
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.navbar {
+    background-color: var(--inviso-navy) !important;
+}
+
+a, .nav-link {
+    color: var(--inviso-blue);
+}
+
+.navbar .nav-link, .navbar-brand {
+    color: #ffffff !important;
+}
+
+.btn-primary {
+    background-color: var(--inviso-blue);
+    border-color: var(--inviso-blue);
+}
+
+.project-card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    border-left: 6px solid var(--bs-secondary);
+    box-shadow: 0 1px 4px rgba(10, 26, 51, 0.1);
+    margin-bottom: 1.25rem;
+}
+
+.project-card.health-green { border-left-color: #2e7d32; }
+.project-card.health-yellow { border-left-color: #f9a825; }
+.project-card.health-red { border-left-color: #c62828; }
+
+.health-badge, .status-badge {
+    font-size: 0.9rem;
+    padding: 0.4em 0.8em;
+}
+
+.next-steps-preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.kpi-tile {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(10, 26, 51, 0.1);
+    height: 100%;
+}
+
+.kpi-label {
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color, #6c757d);
+    margin-bottom: 0.25rem;
+}
+
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--inviso-navy);
+}
+
+.kpi-sub {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.kpi-up { color: #2e7d32; }
+.kpi-down { color: #c62828; }
+
+table.dash-table-container {
+    color: #1a1f2b;
+}
+
+.dash-spreadsheet-container .dash-spreadsheet-inner td,
+.dash-spreadsheet-container .dash-spreadsheet-inner th {
+    background-color: #ffffff !important;
+    color: #1a1f2b !important;
+    border-color: #dde2ec !important;
+}

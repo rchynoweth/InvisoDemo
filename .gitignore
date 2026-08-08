@@ -10,6 +10,9 @@ data
 *.pem
 *.cer
 
+# spark stuff just in case
+aks-spark-poc.yaml
+
 # Distribution / packaging
 .Python
 build/
