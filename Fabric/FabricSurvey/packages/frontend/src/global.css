@@ -1,0 +1,227 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Bridged tokens — kept in `@theme static` so the CSS vars are always
+   emitted, not tree-shaken when no Tailwind utility consumes them.
+   Required because <VegaVisual> and <DataGrid> read these at runtime via
+   `useCssTheme()` and project them into a JS theme object (Vega's SVG output
+   cannot resolve `var()` references). */
+@theme static {
+  --color-brand: #006ecc; /* bar/area fills, button-like brand surfaces */
+  --color-brand-foreground: #006ecc; /* line/point marks, branded text & emphasis */
+  --color-hover: #eff8ff; /* row/cell hover surface in DataGrid + visuals */
+}
+
+@theme {
+  /* Inviso palette (PowerPoint template, "MAIN COLORS / GRADIENTS") */
+  --color-inviso-blue: #006ecc; /* primary */
+  --color-inviso-bright: #3399f0;
+  --color-inviso-deep: #005399;
+  --color-inviso-navy: #0f385b;
+  --color-inviso-tint-50: #eff8ff;
+  --color-inviso-tint-100: #d5ebff;
+  --color-inviso-tint-200: #b8deff;
+  --color-inviso-teal-50: #effbfa; /* teals: use sparingly */
+  --color-inviso-teal-100: #c3f0f5;
+  --color-inviso-teal-200: #a2e2e9;
+
+  /* Color tokens — light theme
+     Usage: bg-*, text-*, border-* (e.g. bg-primary text-primary-foreground)
+     Each token has a -foreground pair for text on that surface. */
+  --color-background: #eff8ff; /* page background */
+  --color-foreground: #0f385b; /* default text */
+
+  --color-card: #ffffff; /* card surfaces */
+  --color-card-foreground: #0f385b;
+
+  --color-popover: #ffffff; /* popover/dropdown surfaces */
+  --color-popover-foreground: #0f385b;
+
+  --color-primary: #006ecc; /* primary actions & buttons */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #eff8ff; /* secondary actions */
+  --color-secondary-foreground: #0f385b;
+
+  --color-muted: #d5ebff; /* subtle backgrounds */
+  --color-muted-foreground: #4a6580; /* subdued text */
+
+  --color-accent: #eff8ff; /* accent highlights */
+  --color-accent-foreground: #005399;
+
+  --color-destructive: #c50f1f; /* errors & destructive actions */
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #d5ebff; /* default border */
+  --color-input: #b8deff; /* input field borders */
+  --color-ring: #3399f0; /* focus rings */
+
+  /* Top bar stays white in both themes so the blue logo keeps its contrast. */
+  --color-nav: #ffffff;
+  --color-nav-foreground: #0f385b;
+
+  /* NPS bands and save confirmation: semantic status colours, not brand. */
+  --color-detractor: #c4513a;
+  --color-passive: #c99a2e;
+  --color-promoter: #2f8a5b;
+  --color-success: #2f8a5b;
+  --color-success-foreground: #ffffff;
+
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
+  --radius-4xl: 24px;
+  --radius-5xl: 32px;
+  --radius-6xl: 40px;
+  --radius-full: 9999px;
+  --radius: 6px;
+
+  /* Spacing — 4px grid; use only these tokens, no interpolation. *-nudge = base − 2px.
+     Usage: p-*, m-*, gap-* (e.g. p-400 gap-300) */
+  --spacing-none: 0;
+  --spacing-100-nudge: 2px;
+  --spacing-100: 4px;
+  --spacing-200-nudge: 6px;
+  --spacing-200: 8px;
+  --spacing-300-nudge: 10px;
+  --spacing-300: 12px;
+  --spacing-400: 16px;
+  --spacing-500: 20px;
+  --spacing-600: 24px;
+  --spacing-700: 28px;
+  --spacing-800: 32px;
+  --spacing-overlap: 56px; /* form card overlapping the hero */
+  --spacing-hero: 80px;
+
+  /* Font Sizes — 100-based scale 
+     Usage: text-* (e.g. text-300, text-hero-900) */
+  --text-100: 10px;
+  --text-200: 12px;
+  --text-300: 14px;
+  --text-400: 16px;
+  --text-500: 20px;
+  --text-600: 24px;
+  --text-hero-700: 28px;
+  --text-hero-800: 32px;
+  --text-hero-900: 40px;
+  --text-hero-1000: 68px;
+
+  /* Line Heights — paired with font sizes
+     Usage: leading-* (e.g. leading-300) */
+  --leading-100: 14px;
+  --leading-200: 16px;
+  --leading-300: 20px;
+  --leading-400: 22px;
+  --leading-500: 28px;
+  --leading-600: 32px;
+  --leading-hero-700: 36px;
+  --leading-hero-800: 40px;
+  --leading-hero-900: 52px;
+  --leading-hero-1000: 92px;
+
+  /* Font Weights
+     Usage: font-* (e.g. font-semibold) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font Families
+     Usage: font-* (e.g. font-heading, font-base) */
+  --font-heading: 'Manrope', 'Segoe UI', system-ui, sans-serif; /* headings */
+  --font-base: 'Manrope', 'Segoe UI', system-ui, sans-serif; /* body text, labels, UI controls */
+  --font-monospace:
+    Consolas, 'Courier New', Courier, monospace; /* code, pre-formatted text */
+  --font-numeric:
+    Bahnschrift, 'Segoe UI',
+    /* KPI values, numeric displays */ 'Segoe UI Web (West European)',
+    -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+
+  /* Icon Sizes — 100-based scale
+     Usage: icon-size-* custom utility (e.g. icon-size-200) */
+  --icon-size-100: 12px;
+  --icon-size-200: 16px;
+  --icon-size-300: 20px;
+  --icon-size-400: 24px;
+  --icon-size-500: 28px;
+  --icon-size-600: 32px;
+  --icon-size-700: 48px;
+}
+
+/* Inviso brand gradients */
+@utility bg-inviso-navy-gradient {
+  background-image: linear-gradient(0deg, #0f385b, #005399);
+}
+@utility bg-inviso-tint-gradient {
+  background-image: linear-gradient(180deg, #eff8ff, #d5ebff);
+}
+
+@utility icon-size-* {
+  width: --value(--icon-size-*);
+  height: --value(--icon-size-*);
+}
+
+@layer base {
+  .dark {
+    /* Color tokens — dark theme (Inviso navy) */
+    --color-background: #0a2540;
+    --color-foreground: #eff8ff;
+
+    --color-card: #0f385b;
+    --color-card-foreground: #eff8ff;
+
+    --color-popover: #0f385b;
+    --color-popover-foreground: #eff8ff;
+
+    --color-primary: #3399f0;
+    --color-primary-foreground: #0a2540;
+
+    --color-secondary: #0f385b;
+    --color-secondary-foreground: #eff8ff;
+
+    --color-muted: #0a2540;
+    --color-muted-foreground: #b8deff;
+
+    --color-accent: #005399;
+    --color-accent-foreground: #eff8ff;
+
+    --color-destructive: #e5484d;
+    --color-destructive-foreground: #ffffff;
+
+    --color-border: #1d4f7a;
+    --color-input: #2a6496;
+    --color-ring: #3399f0;
+
+    --color-brand: #3399f0;
+    --color-brand-foreground: #3399f0;
+    --color-hover: #005399;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background font-base text-foreground antialiased;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}

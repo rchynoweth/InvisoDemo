@@ -1,0 +1,50 @@
+{
+  "runtime": "TypeScript",
+  "functionsMetadata": [
+    {
+      "name": "uploadScreenshot",
+      "scriptFile": "src\\function_app.ts",
+      "bindings": [
+        {
+          "name": "req",
+          "type": "httpTrigger",
+          "direction": "in",
+          "authLevel": "anonymous",
+          "methods": [
+            "post"
+          ],
+          "route": "uploadScreenshot"
+        },
+        {
+          "name": "$return",
+          "type": "http",
+          "direction": "out"
+        },
+        {
+          "name": "__generic_Storage",
+          "direction": "in",
+          "type": "FabricItem",
+          "alias": "",
+          "audienceType": "Storage"
+        }
+      ],
+      "fabricProperties": {
+        "fabricMetadataSchemaVersion": "1.0",
+        "fabricFunctionReturnType": "Promise<UploadScreenshotResult>",
+        "fabricFunctionParameters": [
+          {
+            "name": "ctx",
+            "dataType": "RayfinContext<UniversalAppSchema, AudienceType.Storage>",
+            "hasDefaultValue": false
+          },
+          {
+            "name": "dataBase64",
+            "dataType": "string",
+            "hasDefaultValue": false
+          }
+        ]
+      },
+      "functionCode": "udf.func(\n  'uploadScreenshot',\n  async (\n    ctx: RayfinContext<UniversalAppSchema, AudienceType.Storage>,\n    dataBase64: string\n  ): Promise<UploadScreenshotResult> => {\n    // Base64 is ~4/3 of the binary size; reject oversize input before decoding.\n    if (typeof dataBase64 !== 'string' || dataBase64.length === 0) {\n      return { ok: false, error: 'The screenshot was empty.' };\n    }\n    if (dataBase64.length > Math.ceil((MAX_BYTES * 4) / 3) + 4) {\n      return { ok: false, error: 'Screenshots must be 4 MB or smaller.' };\n    }\n    const bytes = Buffer.from(dataBase64, 'base64');\n    if (bytes.length === 0 || bytes.length > MAX_BYTES) {\n      return { ok: false, error: 'Screenshots must be 4 MB or smaller.' };\n    }\n    const kind = SIGNATURES.find((s) => s.matches(bytes));\n    if (!kind) {\n      return { ok: false, error: 'Only PNG, JPEG, GIF or WebP images can be attached.' };\n    }\n\n    const now = new Date();\n    const day = `${now.getUTCFullYear()}/${String(now.getUTCMonth() + 1).padStart(2, '0')}/${String(now.getUTCDate()).padStart(2, '0')}`;\n    const relative = `${FOLDER}/${day}/${crypto.randomUUID()}.${kind.ext}`;\n    const url = `${ONELAKE_FILES}/${relative}`;\n    const token = ctx.Tokens.Storage;\n\n    try {\n      const created = await dfs(`${url}?resource=file`, { method: 'PUT', headers: { 'Content-Length': '0' } }, token);\n      if (!created.ok) throw new Error(`create ${created.status}`);\n      const appended = await dfs(\n        `${url}?action=append&position=0`,\n        { method: 'PATCH', headers: { 'Content-Type': 'application/octet-stream' }, body: bytes },\n        token\n      );\n      if (!appended.ok) throw new Error(`append ${appended.status}`);\n      const flushed = await dfs(\n        `${url}?action=flush&position=${bytes.length}`,\n        { method: 'PATCH', headers: { 'Content-Length': '0' } },\n        token\n      );\n      if (!flushed.ok) throw new Error(`flush ${flushed.status}`);\n    } catch (err) {\n      // Status codes only: never log tokens, URLs with credentials, or the image.\n      console.error('uploadScreenshot failed:', err instanceof Error ? err.message : 'unknown error');\n      return { ok: false, error: \"Couldn't save the screenshot to Fabric. Please try again.\" };\n    }\n\n    return { ok: true, path: `Files/${relative}` };\n  },\n  []\n)"
+    }
+  ]
+}
